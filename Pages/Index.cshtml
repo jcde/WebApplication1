@@ -1,0 +1,35 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script type="text/javascript">
+    function submit() {
+        $.post('http://isapi.mekashron.com/soapclient/soapclient.php?URL=http://isapi.icu-tech.com/icutech-test.dll%2Fwsdl%2FIICUTech',
+            { func: 'Login', params: $('form[name=ff]').serialize() },
+            function (d) {
+                $('#result').text(d.ret);
+                $('#resultDiv').show();
+                $('#resultDiv').css("color", d.ret.indexOf('ResultCode') == -1 ? "green" : "red");
+            },
+            'json');
+    }
+</script>
+<div class="text-center" style="    padding: 10px;
+                                      margin-left: 20%;
+                                      margin-right: 20%;
+                                      border-width: 2px;
+                                      border-style: groove;">
+    <form name="ff">
+        <div>Username:</div>
+        <input name="UserName" type="text" />
+        <div>Password:</div>
+        <input name="Password" type="password" />
+    </form>
+    <button onclick="submit()" style="margin-top: 5px;">Send</button>
+</div>
+<div id="resultDiv" style="display: none; padding: 10px; margin-left: 20%; margin-right: 20%; border-width: 2px; border-style: dotted;">
+    Return:
+    <span id="result" ></span>
+</div
